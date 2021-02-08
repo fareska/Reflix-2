@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import Movie from './Movie'
 
 export default class Catalog extends Component {
-    constructor(){
+    constructor() {
         super()
         this.state = {
-              searchVal: '',
-              budget: ''
+            searchVal: '',
+            budget: ''
         }
     }
 
@@ -20,10 +21,20 @@ export default class Catalog extends Component {
     }
 
     render() {
+
         return (
             <div className='Catalog'>
                 <input name='searchVal' type="text" value={this.state.searchVal} placeholder='Search Movie' onChange={this.handleInput} />
-                <Movie />
+                {this.props.movies.map((m, i) => {
+                    return (
+                        <div key={i} >
+                            <Link to={`/movie/${i}`} >
+                                <Movie id={i} movie={m} />
+                            </Link>
+                        </div>
+
+                    )
+                })}
             </div>
         )
     }

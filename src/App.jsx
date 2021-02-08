@@ -1,9 +1,13 @@
 import './App.css';
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import Landing from './components/Landing';
 
 import React, { Component } from 'react'
 import Catalog from './components/Catalog';
+import MovieDetail from './components/MovieDetail';
+
+import 'materialize-css';
+import Navbar from './components/Navbar';
 
 export default class App extends Component {
   constructor() {
@@ -16,15 +20,34 @@ export default class App extends Component {
         { id: 3, isRented: false, title: "The Sword in the Stone", year: 1963, img: "https://www.disneyinfo.nl/images/laserdiscs/229-1-AS-front.jpg", descrShort: "Arthur is a young boy who just wants to be a knight's squire. Alas, he is dubbed 'Wart' early on, and it was all downhill from there for a while. On a hunting trip he falls in on Merlin, literally. Merlin is a possibly-mentally-unstable-and-ethically-dubious Wizard that turns Arthur into a literate, at-one-point harassed squirrel. Watch to find out what the heck that means." },
         { id: 4, isRented: false, title: "Beauty and the Beast", year: 2016, img: "https://images-na.ssl-images-amazon.com/images/I/51ArFYSFGJL.jpg", descrShort: "Basically the same as the original, except now Hermi-- Emma Wattson plays Belle, fittingly so some would say, given how actively progressive she is regarding women's rights. Rumor has it that in the bonus scenes she whips out a wand and turns Gaston into a toad, but in order to watch those scenes you need to recite a certain incantation." }
       ],
-
+      users: [
+        { movies: [], name: 'Adam', backGround: 'red' },
+        { movies: [], name: 'John', backGround: 'Yellow' },
+        { movies: [], name: 'Alex', backGround: 'blue' },
+        { movies: [], name: 'Samantha', backGround: 'green' }
+      ],
     }
   }
   render() {
     return (
-      <div className='App'>
-        <Catalog movies={this.state.movies} />
-        
-      </div>
+  <div class="000000 black">
+    <div className="white-text">
+
+      <Router>
+
+        <div className='App' >
+          <Navbar/>
+          <Link to='/'>Home</Link>
+          <Link to='/catalog'>Catalog</Link>
+        </div>
+
+          <Route exact path='/' render={() => <Landing users={this.state.users} />} />
+          <Route exact path='/catalog/:name' render={(match) => <Catalog match={match} user={this.state.users.find(u => u.name === match)} movies={this.state.movies} />} />
+          <Route exact path='/catalog/' render={() => <Catalog movies={this.state.movies} />} />
+          <Route exact path='/movie/:id' render={(match) => <MovieDetail match={match} movies={this.state.movies} />} />
+      </Router>
+    </div>
+  </div>
     )
   }
 }
