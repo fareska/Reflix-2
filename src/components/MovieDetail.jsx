@@ -6,9 +6,7 @@ export default class MovieDetail extends Component {
         let movies=this.props.movies
         let match=this.props.match.match.params.id
         let movie = movies[match]
-        console.log(movies);
-        console.log(match);
-        console.log(movie);
+
         return (
             <div className='Movie Detail'>
                 <h3>{movie.title}</h3>
