@@ -5,10 +5,10 @@ export default class Navbar extends Component {
     render() {
         return (
             <div>
-                <nav style={{backgroundColor:'green'}}>
-                    <div class="nav-wrapper">
-                        <a href="#" class="brand-logo right">Reflix</a>
-                        <ul id="nav-mobile" class="left hide-on-med-and-down">
+                <nav className="black-text" style={{backgroundColor:'grey'}}>
+                    <div className="nav-wrapper">
+                        <a href="#" className="brand-logo right">Reflix</a>
+                        <ul id="nav-mobile" className="left hide-on-med-and-down">
                             
                             
                             

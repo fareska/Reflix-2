@@ -22,7 +22,7 @@ export default class App extends Component {
       ],
       users: [
         { movies: [], name: 'Adam', backGround: 'red' },
-        { movies: [], name: 'John', backGround: 'Yellow' },
+        { movies: [], name: 'John', backGround: 'Orange' },
         { movies: [], name: 'Alex', backGround: 'blue' },
         { movies: [], name: 'Samantha', backGround: 'green' }
       ],
@@ -30,15 +30,13 @@ export default class App extends Component {
   }
   render() {
     return (
-  <div class="000000 black">
+  <div className="000000 black">
     <div className="white-text">
 
       <Router>
 
         <div className='App' >
           <Navbar/>
-          <Link to='/'>Home</Link>
-          <Link to='/catalog'>Catalog</Link>
         </div>
 
           <Route exact path='/' render={() => <Landing users={this.state.users} />} />
