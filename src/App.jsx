@@ -40,9 +40,6 @@ export default class App extends Component {
     })
   }
 
-
-  
-
   render() {
     return (
   <div className="000000 black">

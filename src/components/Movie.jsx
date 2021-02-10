@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 
 export default class Movie extends Component {
 
-    rentMovie = () => this.props.rentMovie(this.props.id)
+    rentMovie = () => this.props.handleBudget(-30, this.props.id)
+
+    returnMovie = () => this.props.handleBudget(+30, this.props.id)
 
     render() {
 
@@ -21,17 +23,17 @@ export default class Movie extends Component {
                                 style={{ width: 200, height: 200 }}
                                 src={this.props.movie.img} />
                         </Link>
-                            <a onClick={this.props.movie.isRented === true ? this.rentMovie: this.rentMovie}
-                                className="btn-floating btn-small halfway-fab waves-effect waves-light red"
-                            >
-                                {this.props.movie.isRented === true
-                                    ? <i className="material-icons">delete</i>
-                                    : <i className="material-icons">add</i>
-                                }
-                            </a>
-                    </div>
+                        <a onClick={this.props.movie.isRented === true ? this.returnMovie : this.rentMovie}
+                            className="btn-floating btn-small halfway-fab waves-effect waves-light red"
+                        >
+                            {this.props.movie.isRented === true
+                                ? <i className="material-icons">delete</i>
+                                : <i className="material-icons">add</i>
+                            }
+                        </a>
                     </div>
                 </div>
+            </div>
 
         )
     }
