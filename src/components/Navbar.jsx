@@ -5,6 +5,9 @@ export default class Navbar extends Component {
 
     
     render() {
+
+        
+
         return (
             <div>
                 <nav className="black-text" style={{backgroundColor:'grey'}}>
@@ -12,7 +15,7 @@ export default class Navbar extends Component {
                         <a href="#" className="brand-logo right">Reflix</a>
                         <ul id="nav-mobile" className="left hide-on-med-and-down">
                             <li><Link to='/'>Home</Link></li>
-                            <li onClick={this.loginUser}><Link to='/catalog'>Catalog</Link></li>
+                            <li onClick={this.loginUser}><Link to={`/catalog/${this.props.activeUser.name}`}>Catalog</Link></li>
                         </ul>
                     </div>
                 </nav>

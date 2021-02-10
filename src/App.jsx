@@ -22,12 +22,13 @@ export default class App extends Component {
         { id: 4, isRented: false, title: "Beauty and the Beast", year: 2016, img: "https://images-na.ssl-images-amazon.com/images/I/51ArFYSFGJL.jpg", descrShort: "Basically the same as the original, except now Hermi-- Emma Wattson plays Belle, fittingly so some would say, given how actively progressive she is regarding women's rights. Rumor has it that in the bonus scenes she whips out a wand and turns Gaston into a toad, but in order to watch those scenes you need to recite a certain incantation." }
       ],
       users: [
-        { movies: [], name: 'Adam', backGround: 'red' },
-        { movies: [], name: 'John', backGround: 'Orange' },
-        { movies: [], name: 'Alex', backGround: 'blue' },
-        { movies: [], name: 'Samantha', backGround: 'green' }
+        { movies: [], budget: 100, name: 'Adam', backGround: 'red' },
+        { movies: [], budget: 100, name: 'John', backGround: 'Orange' },
+        { movies: [], budget: 100, name: 'Alex', backGround: 'blue' },
+        { movies: [], budget: 100, name: 'Samantha', backGround: 'green' }
       ],
-      budget: 10,
+      activeUser: {},
+      budget: 100
     }
   }
 
@@ -40,24 +41,52 @@ export default class App extends Component {
     })
   }
 
+  loginUser = userName => {
+    let users = [...this.state.users]
+    let userInfo = users.filter(u => u.name === userName)
+    localStorage.user = JSON.stringify(userInfo)
+    let activeUser = JSON.parse(localStorage.user)[0]
+    activeUser.movies = activeUser.movies.length > 0 ? activeUser.movies.length : [...this.state.movies]
+    this.setState({
+      activeUser
+    }, console.log(this.state))
+  }
+
+  handleBudget = (bill, movieId) => {
+    let user = { ...this.state.activeUser }
+    let checkBudget = user.budget + bill > 0 ? true : false
+
+    if (checkBudget) {
+      user.budget += bill
+
+      this.setState({
+        activeUser: user
+      }, this.rentMovie(movieId))
+    } else alert('check your budget')
+
+
+
+
+  }
+
   render() {
     return (
-  <div className="000000 black">
-    <div className="white-text">
-      {/* <Temp/> */}
-      <Router>
+      <div className="000000 black">
+        <div className="white-text">
+          {/* <Temp/> */}
+          <Router>
 
-        <div className='App' >
-          <Navbar loginUser={this.loginUser} />
+            <div className='App' >
+              <Navbar activeUser={this.state.activeUser} />
+            </div>
+
+            <Route exact path='/' render={() => <Landing loginUser={this.loginUser} />} />
+            <Route exact path='/catalog/:name' render={(match) => <Catalog budget={this.state.activeUser.budget} handleBudget={this.handleBudget} match={match} returnMovie={this.returnMovie} rentMovie={this.rentMovie} movies={this.state.movies} />} />
+            {/* <Route exact path='/catalog' render={() => <Catalog returnMovie={this.returnMovie} rentMovie={this.rentMovie} movies={this.state.movies} />} /> */}
+            <Route exact path='/movie/:id' render={(match) => <MovieDetail match={match} movies={this.state.movies} />} />
+          </Router>
         </div>
-
-          <Route exact path='/' render={() => <Landing />} />
-          {/* <Route exact path='/catalog/:name' render={(match) => <Catalog  rentMovie={this.rentMovie} match={match} user={this.state.users.find(u => u.name === match.match.params.name)} movies={this.state.movies} />} /> */}
-          <Route exact path='/catalog' render={() => <Catalog returnMovie={this.returnMovie}  rentMovie={this.rentMovie} movies={this.state.movies} />} />
-          <Route exact path='/movie/:id' render={(match) => <MovieDetail match={match} movies={this.state.movies} />} />
-      </Router>
-    </div>
-  </div>
+      </div>
     )
   }
 }

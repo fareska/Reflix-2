@@ -24,35 +24,28 @@ export default class Catalog extends Component {
         return relevantMovies
     }
 
-    rentMovie= id => this.props.rentMovie(id)
 
-    handleBudget = (bill, movieId) => {
-        let checkBudget = this.state.budget + bill > 0 ? true : false 
-        if(checkBudget){
-            this.setState({
-                budget:this.state.budget+bill
-            },this.rentMovie(movieId) )
-        }else alert('check your budget')
-    }
 
     render() {
 
         let rentedMovies = this.props.movies.filter(m => m.isRented === true)
-        rentedMovies = this.searchedMovies(rentedMovies) 
-        
-         
-        let movies = this.searchedMovies(this.props.movies) || this.props.movies 
+        rentedMovies = this.searchedMovies(rentedMovies)
+
+
+        let movies = this.searchedMovies(this.props.movies) || this.props.movies
         return (
             <div className='Catalog'>
-                <CatalogInput value={this.props.searchVal} handleInput={this.handleInput}/>
-                <h3>budget is: {this.state.budget}</h3>
+                <CatalogInput value={this.props.searchVal} handleInput={this.handleInput} />
+
+                <h3>budget is: {this.props.budget}</h3>
+
                 {rentedMovies.length > 0
                     && <div className="row">
                         <h3>Rented Movies:</h3>
                         {rentedMovies.map((m, i) => {
                             return (
                                 <div key={i} >
-                                    <Movie id={m.id} movie={m} handleBudget={this.handleBudget} rentMovie={this.props.rentMovie} />
+                                    <Movie id={m.id} movie={m} handleBudget={this.props.handleBudget} rentMovie={this.props.rentMovie} />
                                 </div>
 
                             )
@@ -65,7 +58,7 @@ export default class Catalog extends Component {
                     {movies.map((m, i) => {
                         return (
                             <div key={i} >
-                                <Movie id={m.id} movie={m} handleBudget={this.handleBudget} rentMovie={this.props.rentMovie} />
+                                <Movie id={m.id} movie={m} handleBudget={this.props.handleBudget} rentMovie={this.props.rentMovie} />
                             </div>
                         )
                     })}
